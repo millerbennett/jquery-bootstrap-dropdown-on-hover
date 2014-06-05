@@ -1,0 +1,28 @@
+{
+  "name": "bootstrap-navigation-on-hover",
+  "title": "Bootstrap Navigation on Hover",
+  "description": "Adds hover functionality to bootstrap menus",
+  "version": "0.1",
+  "homepage": "git",
+  "author": {
+    "name": "Ben Miller",
+    "url": "https://github.com/millerbennett"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git"
+  },
+  "bugs": "",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "~1.11.1"
+  },
+  "keywords": [
+    "jquery-plugin"
+  ]
+}
