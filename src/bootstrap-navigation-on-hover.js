@@ -131,11 +131,11 @@
             $menu.stop(true, true);
 
             // animate on plugin setting
-            if (plugin.settings.animation == "slide") {
+            if (plugin.settings.animation === "slide") {
                 $menu.slideDown(plugin.settings.animationInSpeed);
             }
 
-            if (plugin.settings.animation == "fade") {
+            if (plugin.settings.animation === "fade") {
                 $menu.fadeIn(plugin.settings.animationInSpeed);
             }
         };
@@ -152,13 +152,13 @@
             $menu.delay(plugin.settings.mouseOutDelay);
 
             // animate on plugin setting
-            if (plugin.settings.animation == "slide") {
+            if (plugin.settings.animation === "slide") {
                 $menu.slideUp(plugin.settings.animationOutSpeed, function() {
                     $self.removeClass("open");
                 });
             }
 
-            if (plugin.settings.animation == "fade") {
+            if (plugin.settings.animation === "fade") {
                 $menu.fadeOut(plugin.settings.animationOutSpeed, function() {
                     $self.removeClass("open");
                 });
@@ -182,7 +182,7 @@
         return this.each(function() {
 
             // if plugin has not already been attached to the element
-            if (undefined == $(this).data('bootstrapNavigationOnHover')) {
+            if (undefined === $(this).data('bootstrapNavigationOnHover')) {
 
                 // create a new instance of the plugin
                 // pass the DOM element and the user-provided options as arguments
@@ -199,6 +199,6 @@
 
         });
 
-    }
+    };
 
 })(jQuery);
