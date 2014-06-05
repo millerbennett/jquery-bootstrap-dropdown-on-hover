@@ -18,6 +18,8 @@
         var defaults = {
             animationInSpeed: 500,
             animationOutSpeed: 500,
+            animationInEase: "swing",
+            animationOutEase: "swing",
             animation: "fade",
             mouseOutDelay: 500,
             responsive: true,
@@ -128,15 +130,21 @@
 
             // add the active class to this dropdown menu
             $self.addClass("open");
-            $menu.stop(true, true);
+            stopAnimation($menu);
+
+            // build the options for the mouse in animation
+            var animationOptions = {
+                "duration": plugin.settings.animationInSpeed,
+                "easing": plugin.settings.animationInEase
+            };
 
             // animate on plugin setting
             if (plugin.settings.animation === "slide") {
-                $menu.slideDown(plugin.settings.animationInSpeed);
+                $menu.slideDown(animationOptions);
             }
 
             if (plugin.settings.animation === "fade") {
-                $menu.fadeIn(plugin.settings.animationInSpeed);
+                $menu.fadeIn(animationOptions);
             }
         };
 
@@ -145,28 +153,37 @@
             var $menu = $self.find('.dropdown-menu');
 
             // stop all animations
-            $menu.stop(true, true);
+            stopAnimation($menu);
 
             // introduce a mouse delay for usability, this protects the user from accidently mousing-out
             // of a dropdown menu, giving them time to mouse back in
             $menu.delay(plugin.settings.mouseOutDelay);
 
+            // build the options for the mouse out animation
+            var animationOptions = {
+                "complete": function() {
+                    $self.removeClass("open");
+                },
+                "duration": plugin.settings.animationOutSpeed,
+                "easing": plugin.settings.animationOutEase
+            };
+
             // animate on plugin setting
             if (plugin.settings.animation === "slide") {
-                $menu.slideUp(plugin.settings.animationOutSpeed, function() {
-                    $self.removeClass("open");
-                });
+                $menu.slideUp(animationOptions);
             }
 
             if (plugin.settings.animation === "fade") {
-                $menu.fadeOut(plugin.settings.animationOutSpeed, function() {
-                    $self.removeClass("open");
-                });
+                $menu.fadeOut(animationOptions);
             }
         };
 
         var windowGreaterThanThreshold = function() {
             return $W.width() >= plugin.settings.responsiveThreshold;
+        };
+
+        var stopAnimation = function($e) {
+            $e.stop(true, true);
         };
 
         // fire up the plugin!
