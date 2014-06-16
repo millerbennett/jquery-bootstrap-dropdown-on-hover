@@ -36,6 +36,11 @@
     strictEqual(typeof this.elems.data('bootstrapNavigationOnHover'), 'object', 'should store plugin data as object');
   });
 
+  test('plugin gets destroyed', function() {
+    this.elems.data('bootstrapNavigationOnHover').destroy();
+    strictEqual(typeof this.elems.data('bootstrapNavigationOnHover'), 'undefined', 'plugin data should be undefined after destroy call');
+  });
+
 
   /*
   test('is chainable', function() {
