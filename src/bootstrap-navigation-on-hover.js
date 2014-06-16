@@ -38,8 +38,10 @@
         // where "element" is the element the plugin is attached to;
         plugin.settings = {};
 
-        var $element = $(element); // reference to the jQuery version of DOM element
+        var $parent = $(element); // reference to the jQuery version of DOM element
         var $W = $(window); // reference to the window object
+
+        var menuTimer = -1;
 
         // the "constructor" method that gets called when the object is created
         plugin.init = function() {
@@ -49,9 +51,10 @@
             plugin.settings = $.extend({}, defaults, options);
 
             // find each dropdown parent item
-            $element.find("li.dropdown").each(function(i, el) {
+            $parent.find("[data-toggle='dropdown']").each(function(i, el) {
 
-                var $li = $(el);
+                var $el = $(el);
+                var $menu = $el.parent().find(".dropdown-menu");
 
                 if (plugin.settings.responsive) {
 
@@ -59,18 +62,26 @@
                     if (windowGreaterThanThreshold()) {
 
                         //attach hover bindings to list element
-                        $li.bind("mouseenter.bnoh", onMouseIn);
-                        $li.bind("mouseleave.bnoh", onMouseOut);
+                        $el.bind("mouseenter.bnoh", onMouseIn);
+                        $el.bind("mouseleave.bnoh", onMouseOut);
+
+                        //attach hover bindings to list element
+                        $menu.bind("mouseenter.bnoh", onMouseIn);
+                        $menu.bind("mouseleave.bnoh", onMouseOut);
                     }
                 } else {
 
                     //attach hover bindings to list element
-                    $li.bind("mouseenter.bnoh", onMouseIn);
-                    $li.bind("mouseleave.bnoh", onMouseOut);
+                    $el.bind("mouseenter.bnoh", onMouseIn);
+                    $el.bind("mouseleave.bnoh", onMouseOut);
+
+                    //attach hover bindings to list element
+                    $menu.bind("mouseenter.bnoh", onMouseIn);
+                    $menu.bind("mouseleave.bnoh", onMouseOut);
                 }
 
                 // find and hook into the click function for each root list element
-                $li.find("a.root").bind("click.bnoh", function(e) {
+                $el.find("a[data-toggle='dropdown']").bind("click.bnoh", function(e) {
                     var $self = $(this);
 
                     // prevent bootstrap's default action to show the drop-down menu
@@ -102,13 +113,13 @@
         plugin.destroy = function() {
 
             // unbind mouse enter and leave events
-            $element.find("li.dropdown").unbind(".bnoh");
+            $parent.find("[data-toggle='dropdown']").unbind(".bnoh");
 
             // unbind mouse click events
-            $element.find("a.root").unbind(".bnoh");
+            $parent.find("a[data-toggle='dropdown']").unbind(".bnoh");
 
             // remove plugin data
-            $element.removeData("bootstrapNavigationOnHover");
+            $parent.removeData("bootstrapNavigationOnHover");
         };
 
         // private methods
@@ -117,15 +128,17 @@
 
         var onMouseIn = function() {
             var $self = $(this);
-            var $parent = $(this).parent().parent();
-            var $menu = $self.find('.dropdown-menu');
+            var $parent = $(this).parent();
+            var $menu = $parent.find('.dropdown-menu');
+
+            clearTimeout(menuTimer);
 
             // we'll check to see if this dropdown has already been opened
             if (!$self.hasClass('open')) {
 
                 // if it hasn't, we should hide all the possible other open dropdown menus
                 $parent.find('.dropdown-menu').hide();
-                $parent.find('li.dropdown').removeClass('open');
+                $parent.find('[data-toggle="dropdown"]').removeClass('open');
             }
 
             // add the active class to this dropdown menu
@@ -150,14 +163,13 @@
 
         var onMouseOut = function() {
             var $self = $(this);
-            var $menu = $self.find('.dropdown-menu');
+            var $menu = $self.parent().find('.dropdown-menu');
 
             // stop all animations
             stopAnimation($menu);
 
             // introduce a mouse delay for usability, this protects the user from accidently mousing-out
             // of a dropdown menu, giving them time to mouse back in
-            $menu.delay(plugin.settings.mouseOutDelay);
 
             // build the options for the mouse out animation
             var animationOptions = {
@@ -170,11 +182,15 @@
 
             // animate on plugin setting
             if (plugin.settings.animation === "slide") {
-                $menu.slideUp(animationOptions);
+                menuTimer = setTimeout(function() {
+                    $menu.slideUp(animationOptions);
+                }, plugin.settings.mouseOutDelay);
             }
 
             if (plugin.settings.animation === "fade") {
-                $menu.fadeOut(animationOptions);
+                menuTimer = setTimeout(function() {
+                    $menu.fadeOut(animationOptions);
+                }, plugin.settings.mouseOutDelay);
             }
         };
 
