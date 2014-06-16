@@ -1,9 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <meta charset="utf-8">
+    <title>Bootstrap Navigation on Hover Test Suite</title>
+    <!-- Load local jQuery. -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <!-- Load local Bootstrap. -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.css" type="text/css" rel="stylesheet" />
+    <!-- Load local lib and tests. -->
+    <script src="../src/bootstrap-navigation-on-hover.js"></script>
+    <!-- Demo script -->
+    <script>
+        $(function() {
+            $("#demo-1").bootstrapNavigationOnHover();
+            /*
+            $("#demo-2").bootstrapNavigationOnHover();
+            $("#demo-3").bootstrapNavigationOnHover();
+            */
+        });
+    </script>
 </head>
 <body>
-
+<div class="container">
+    <h2>Drop-Down Navigation Menu</h2>
+    <ul id="demo-1" class="nav navbar-nav">
+        <li><a href="#">Home</a></li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Google <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">First</a></li>
+                <li><a href="#">Second</a></li>
+                <li><a href="#">Third</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Facebook <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">First</a></li>
+                <li><a href="#">Second</a></li>
+                <li><a href="#">Third</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Microsoft <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">First</a></li>
+                <li><a href="#">Second</a></li>
+                <li><a href="#">Third</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <h2>Button</h2>
+    <div id="demo-2" class="btn-group">
+        <div class="dropdown btn-group">
+            <a class="btn btn-default" data-toggle="dropdown" href="#">Dropdown trigger <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><a href="#">First</a></li>
+                <li><a href="#">Second</a></li>
+                <li><a href="#">Third</a></li>
+            </ul>
+        </div>
+        <div class="dropdown btn-group">
+            <a class="btn btn-default" data-toggle="dropdown" href="#">Dropdown trigger <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><a href="#">First</a></li>
+                <li><a href="#">Second</a></li>
+                <li><a href="#">Third</a></li>
+            </ul>
+        </div>
+        <div class="dropdown btn-group">
+            <a class="btn btn-default" data-toggle="dropdown" href="#">Dropdown trigger <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><a href="#">First</a></li>
+                <li><a href="#">Second</a></li>
+                <li><a href="#">Third</a></li>
+            </ul>
+        </div>
+        <a class="btn btn-default" data-toggle="dropdown" href="#">Extra Button</a>
+    </div>
+</div>
+<div class="container">
+    <h2>Split Button</h2>
+    <div id="demo-3" class="btn-group">
+        <button type="button" class="btn btn-default" onclick="alert('action triggered!')">Action</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
