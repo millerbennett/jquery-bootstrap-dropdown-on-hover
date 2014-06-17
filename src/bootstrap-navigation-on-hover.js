@@ -14,17 +14,12 @@
     $.bootstrapNavigationOnHover = function(element, options) {
 
         // plugin's default options
-        // this is private property and is  accessible only from inside the plugin
+        // this is private property and is accessible only from inside the plugin
         var defaults = {
-            animationInSpeed: 500,
-            animationOutSpeed: 500,
-            animationInEase: "swing",
-            animationOutEase: "swing",
-            animation: "fade",
             mouseOutDelay: 500,
-            responsive: true,
-            responsiveThreshold: 768,
-            parentClickable: true
+            responsiveThreshold: 992,
+            parentClickable: true,
+            hideBackdrop: true
         };
 
         // to avoid confusions, use "plugin" to reference the
@@ -38,9 +33,11 @@
         // where "element" is the element the plugin is attached to;
         plugin.settings = {};
 
-        var $parent = $(element); // reference to the jQuery version of DOM element
-        var $W = $(window); // reference to the window object
-
+        // reference to the jQuery version of DOM element
+        var $container = $(element);
+        // reference to the window object
+        var $W = $(window);
+        // reference to the timer that times how long the mouse is outside of the menu element
         var menuTimer = -1;
 
         // the "constructor" method that gets called when the object is created
@@ -51,54 +48,94 @@
             plugin.settings = $.extend({}, defaults, options);
 
             // find each dropdown parent item
-            $parent.find("[data-toggle='dropdown']").each(function(i, el) {
+            $container.find("[data-toggle='dropdown']").each(function(i, el) {
+                // the trigger element, usually a button or an anchor
+                var $trigger = $(el);
+                // the menu element, the ul container of the li elements
+                var $menu = $trigger.parent().find(".dropdown-menu");
+                // the parent of both the trigger and the menu
+                var $parent = $trigger.parent();
 
-                var $el = $(el);
-                var $menu = $el.parent().find(".dropdown-menu");
+                $trigger.on("mouseenter.bnoh", function() {
 
-                if (plugin.settings.responsive) {
-
-                    // if the window is within the responsive threshold
-                    if (windowGreaterThanThreshold()) {
-
-                        //attach hover bindings to list element
-                        $el.bind("mouseenter.bnoh", onMouseIn);
-                        $el.bind("mouseleave.bnoh", onMouseOut);
-
-                        //attach hover bindings to list element
-                        $menu.bind("mouseenter.bnoh", onMouseIn);
-                        $menu.bind("mouseleave.bnoh", onMouseOut);
+                    // responsive check, disable this function if it is in the responsive threshold
+                    if (responsive()) {
+                        return;
                     }
-                } else {
 
-                    //attach hover bindings to list element
-                    $el.bind("mouseenter.bnoh", onMouseIn);
-                    $el.bind("mouseleave.bnoh", onMouseOut);
+                    // when the mouse enters the trigger element, we should immediately cancel the existing timeout
+                    // if the mouse goes into the menu, then back to the trigger, we don't want the menu to hide
+                    clearTimeout(menuTimer);
 
-                    //attach hover bindings to list element
-                    $menu.bind("mouseenter.bnoh", onMouseIn);
-                    $menu.bind("mouseleave.bnoh", onMouseOut);
-                }
+                    // if the dropdown is not yet open, we should open it.
+                    // we check first to make sure not to double toggle the menu
+                    if (!$parent.hasClass("open")) {
 
-                // find and hook into the click function for each root list element
-                $el.find("a[data-toggle='dropdown']").bind("click.bnoh", function(e) {
-                    var $self = $(this);
+                        // trigger bootstrap's dropdown
+                        $trigger.dropdown('toggle');
 
-                    // prevent bootstrap's default action to show the drop-down menu
-                    if (windowGreaterThanThreshold()) {
-
-                        // stop defualt event and event propagation
-                        e.stopPropagation();
-                        e.preventDefault();
-
-                        // check if we need to go somewhere upon clicking the parent item
-                        if (plugin.settings.parentClickable) {
-
-                            // go to the anchor's href location
-                            window.location = $self.attr("href");
+                        // if we're hiding the backdrop (by default) then we'll remove that element.
+                        // the backdrop element prevents mouse hover events from being registered on button groups
+                        if (plugin.settings.hideBackdrop) {
+                            $parent.find(".dropdown-backdrop").remove();
                         }
-
                     }
+                });
+
+                $trigger.on("mouseleave.bnoh", function() {
+
+                    // responsive check, disable this function if it is in the responsive threshold
+                    if (responsive()) {
+                        return;
+                    }
+
+                    // when the mouse leaves the trigger, set the menu timeout
+                    menuTimer = setTimeout(function() {
+
+                        // on timeout, check whether the menu is open
+                        if ($parent.hasClass("open") && $parent.find(".dropdown-backdrop").length === 0) {
+
+                            // if it is open, then we'll hide it
+                            $trigger.dropdown('toggle');
+
+                            // blur the trigger element to remove the focus or active styling
+                            $trigger.blur();
+                        }
+                    }, plugin.settings.mouseOutDelay); // setting for mouse-out duration
+                });
+
+                $menu.on("mouseenter.bnoh", function() {
+
+                    // responsive check, disable this function if it is in the responsive threshold
+                    if (responsive()) {
+                        return;
+                    }
+
+                    // we don't want to hide the menu (the timer set on the trigger mouseleave will hide it)
+                    // unless we clear it when the menu is hovered upon
+                    clearTimeout(menuTimer);
+                });
+
+                $menu.on("mouseleave.bnoh", function() {
+
+                    // responsive check, disable this function if it is in the responsive threshold
+                    if (responsive()) {
+                        return;
+                    }
+
+                    // set the menu timer upon the mouse leaving the menu
+                    menuTimer = setTimeout(function() {
+
+                        // check to see that the menu is open
+                        if ($parent.hasClass("open")) {
+
+                            // if it is, then hide it
+                            $trigger.dropdown('toggle');
+
+                            // blur the trigger element to remove the focus or active styling
+                            $trigger.blur();
+                        }
+                    }, plugin.settings.mouseOutDelay); // setting for mouse-out duration
                 });
             });
         };
@@ -112,94 +149,25 @@
         // destroy and unset all the plugin functions
         plugin.destroy = function() {
 
-            // unbind mouse enter and leave events
-            $parent.find("[data-toggle='dropdown']").unbind(".bnoh");
+            // unbind mouse enter and leave events for triggers
+            $container.find("[data-toggle='dropdown']").unbind(".bnoh");
 
-            // unbind mouse click events
-            $parent.find("a[data-toggle='dropdown']").unbind(".bnoh");
+            // unbind mouse enter and leave events for menus
+            $container.find(".dropdown-menu").unbind(".bnoh");
 
             // remove plugin data
-            $parent.removeData("bootstrapNavigationOnHover");
+            $container.removeData("bootstrapNavigationOnHover");
         };
 
         // private methods
         // these methods can be called only from inside the plugin like:
         // methodName(arg1, arg2, ... argn)
 
-        var onMouseIn = function() {
-            var $self = $(this);
-            var $parent = $(this).parent();
-            var $menu = $parent.find('.dropdown-menu');
+        var responsive = function() {
 
-            clearTimeout(menuTimer);
-
-            // we'll check to see if this dropdown has already been opened
-            if (!$self.hasClass('open')) {
-
-                // if it hasn't, we should hide all the possible other open dropdown menus
-                $parent.find('.dropdown-menu').hide();
-                $parent.find('[data-toggle="dropdown"]').removeClass('open');
-            }
-
-            // add the active class to this dropdown menu
-            $self.addClass("open");
-            stopAnimation($menu);
-
-            // build the options for the mouse in animation
-            var animationOptions = {
-                "duration": plugin.settings.animationInSpeed,
-                "easing": plugin.settings.animationInEase
-            };
-
-            // animate on plugin setting
-            if (plugin.settings.animation === "slide") {
-                $menu.slideDown(animationOptions);
-            }
-
-            if (plugin.settings.animation === "fade") {
-                $menu.fadeIn(animationOptions);
-            }
-        };
-
-        var onMouseOut = function() {
-            var $self = $(this);
-            var $menu = $self.parent().find('.dropdown-menu');
-
-            // stop all animations
-            stopAnimation($menu);
-
-            // introduce a mouse delay for usability, this protects the user from accidently mousing-out
-            // of a dropdown menu, giving them time to mouse back in
-
-            // build the options for the mouse out animation
-            var animationOptions = {
-                "complete": function() {
-                    $self.removeClass("open");
-                },
-                "duration": plugin.settings.animationOutSpeed,
-                "easing": plugin.settings.animationOutEase
-            };
-
-            // animate on plugin setting
-            if (plugin.settings.animation === "slide") {
-                menuTimer = setTimeout(function() {
-                    $menu.slideUp(animationOptions);
-                }, plugin.settings.mouseOutDelay);
-            }
-
-            if (plugin.settings.animation === "fade") {
-                menuTimer = setTimeout(function() {
-                    $menu.fadeOut(animationOptions);
-                }, plugin.settings.mouseOutDelay);
-            }
-        };
-
-        var windowGreaterThanThreshold = function() {
-            return $W.width() >= plugin.settings.responsiveThreshold;
-        };
-
-        var stopAnimation = function($e) {
-            $e.stop(true, true);
+            // returns true if the plugin is set to be responsive and the width of the window is less than
+            // the plugin responsive threashhold setting
+            return $W.width() <= plugin.settings.responsiveThreshold;
         };
 
         // fire up the plugin!

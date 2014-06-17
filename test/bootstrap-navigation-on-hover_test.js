@@ -1,79 +1,44 @@
-(function($) {
-  /*
-    ======== A Handy Little QUnit Reference ========
-    http://api.qunitjs.com/
+(function ($) {
+    /*
+     ======== A Handy Little QUnit Reference ========
+     http://api.qunitjs.com/
 
-    Test methods:
-      module(name, {[setup][ ,teardown]})
-      test(name, callback)
-      expect(numberOfAssertions)
-      stop(increment)
-      start(decrement)
-    Test assertions:
-      ok(value, [message])
-      equal(actual, expected, [message])
-      notEqual(actual, expected, [message])
-      deepEqual(actual, expected, [message])
-      notDeepEqual(actual, expected, [message])
-      strictEqual(actual, expected, [message])
-      notStrictEqual(actual, expected, [message])
-      throws(block, [expected], [message])
-  */
+     Test methods:
+     module(name, {[setup][ ,teardown]})
+     test(name, callback)
+     expect(numberOfAssertions)
+     stop(increment)
+     start(decrement)
+     Test assertions:
+     ok(value, [message])
+     equal(actual, expected, [message])
+     notEqual(actual, expected, [message])
+     deepEqual(actual, expected, [message])
+     notDeepEqual(actual, expected, [message])
+     strictEqual(actual, expected, [message])
+     notStrictEqual(actual, expected, [message])
+     throws(block, [expected], [message])
+     */
 
-  module('jQuery#bootstrapNavigationOnHover', {
-    // This will run before each test in this module.
-    setup: function() {
-      this.elems = $('#qunit-fixture').bootstrapNavigationOnHover();
-    }
-  });
+    module('jQuery#bootstrapNavigationOnHover', {
+        // This will run before each test in this module.
+        setup: function () {
+            this.elems = $('#qunit-fixture').bootstrapNavigationOnHover();
+        }
+    });
 
-  test('is chainable', function() {
-    // Not a bad test to run on collection methods.
-    strictEqual(this.elems.bootstrapNavigationOnHover(), this.elems, 'should be chainable');
-  });
+    test('is chainable', function () {
+        // Not a bad test to run on collection methods.
+        strictEqual(this.elems.bootstrapNavigationOnHover(), this.elems, 'should be chainable');
+    });
 
-  test('has plugin data', function() {
-    strictEqual(typeof this.elems.data('bootstrapNavigationOnHover'), 'object', 'should store plugin data as object');
-  });
+    test('has plugin data', function () {
+        strictEqual(typeof this.elems.data('bootstrapNavigationOnHover'), 'object', 'should store plugin data as object');
+    });
 
-  test('plugin gets destroyed', function() {
-    this.elems.data('bootstrapNavigationOnHover').destroy();
-    strictEqual(typeof this.elems.data('bootstrapNavigationOnHover'), 'undefined', 'plugin data should be undefined after destroy call');
-  });
-
-
-  /*
-  test('is chainable', function() {
-    expect(1);
-    // Not a bad test to run on collection methods.
-    strictEqual(this.elems.awesome(), this.elems, 'should be chainable');
-  });
-
-  test('is awesome', function() {
-    expect(1);
-    strictEqual(this.elems.awesome().text(), 'awesome0awesome1awesome2', 'should be awesome');
-  });
-
-  module('jQuery.awesome');
-
-  test('is awesome', function() {
-    expect(2);
-    strictEqual($.awesome(), 'awesome.', 'should be awesome');
-    strictEqual($.awesome({punctuation: '!'}), 'awesome!', 'should be thoroughly awesome');
-  });
-
-  module(':awesome selector', {
-    // This will run before each test in this module.
-    setup: function() {
-      this.elems = $('#qunit-fixture').children();
-    }
-  });
-
-  test('is awesome', function() {
-    expect(1);
-    // Use deepEqual & .get() when comparing jQuery objects.
-    deepEqual(this.elems.filter(':awesome').get(), this.elems.last().get(), 'knows awesome when it sees it');
-  });
-*/
+    test('plugin gets destroyed', function () {
+        this.elems.data('bootstrapNavigationOnHover').destroy();
+        strictEqual(typeof this.elems.data('bootstrapNavigationOnHover'), 'undefined', 'plugin data should be undefined after destroy call');
+    });
 
 }(jQuery));

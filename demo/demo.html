@@ -15,10 +15,12 @@
     <script>
         $(function() {
             $("#demo-1").bootstrapNavigationOnHover();
-            /*
-            $("#demo-2").bootstrapNavigationOnHover();
-            $("#demo-3").bootstrapNavigationOnHover();
-            */
+            $("#demo-2").bootstrapNavigationOnHover({
+                mouseOutDelay: 500
+            });
+            $("#demo-3").bootstrapNavigationOnHover({
+                mouseOutDelay: 250
+            });
         });
     </script>
 </head>
@@ -28,7 +30,7 @@
     <ul id="demo-1" class="nav navbar-nav">
         <li><a href="#">Home</a></li>
         <li class="dropdown">
-            <a href="#" data-toggle="dropdown">Google <b class="caret"></b></a>
+            <a id="a" href="#" data-toggle="dropdown">Google <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="#">First</a></li>
                 <li><a href="#">Second</a></li>
@@ -80,7 +82,7 @@
                 <li><a href="#">Third</a></li>
             </ul>
         </div>
-        <a class="btn btn-default" data-toggle="dropdown" href="#">Extra Button</a>
+        <a class="btn btn-default" href="#">Extra Button</a>
     </div>
 </div>
 <div class="container">
