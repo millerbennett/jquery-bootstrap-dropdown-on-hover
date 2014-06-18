@@ -18,7 +18,6 @@
         var defaults = {
             mouseOutDelay: 500,
             responsiveThreshold: 992,
-            parentClickable: true,
             hideBackdrop: true
         };
 
