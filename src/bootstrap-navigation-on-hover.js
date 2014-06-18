@@ -74,8 +74,13 @@
                         // trigger bootstrap's dropdown
                         $trigger.dropdown('toggle');
 
-                        // if we're hiding the backdrop (by default) then we'll remove that element.
-                        // the backdrop element prevents mouse hover events from being registered on button groups
+                        /* Bootstrap puts a backdrop on touch-enabled (mostly mobile) devices, but it could also appear
+                        on devices such as the Surface or other large touch-screen devices that might also be used with
+                        a trackpad or mouse. This overlay prevents the mouse from interacting with other elements, so we're
+                        going to disable the backdrop for the use of this plugin.
+
+                        This behavior can be disabled using the hideBackdrop setting.
+                         */
                         if (plugin.settings.hideBackdrop) {
                             $parent.find(".dropdown-backdrop").remove();
                         }
