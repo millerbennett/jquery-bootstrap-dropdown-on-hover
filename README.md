@@ -6,8 +6,8 @@ Adds hover functionality to bootstrap menus
 
 Download the [production version][min] or the [development version][max].
 
-[min]: https://raw.github.com/millerbennett/jquery-bootstrap-navigation-on-hover/master/dist/jquery.bootstrap-navigation-on-hover.min.js
-[max]: https://raw.github.com/millerbennett/jquery-bootstrap-navigation-on-hover/master/dist/jquery.bootstrap-navigation-on-hover.js
+[min]: https://raw.github.com/millerbennett/jquery-bootstrap-dropdown-on-hover/master/dist/jquery.bootstrap-navigation-on-hover.min.js
+[max]: https://raw.github.com/millerbennett/jquery-bootstrap-dropdown-on-hover/master/dist/jquery.bootstrap-navigation-on-hover.js
 
 In your web page:
 

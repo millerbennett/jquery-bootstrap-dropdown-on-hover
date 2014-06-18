@@ -1,6 +1,6 @@
 {
-  "name": "bootstrap-navigation-on-hover",
-  "title": "Bootstrap Navigation on Hover",
+  "name": "bootstrap-dropdown-on-hover",
+  "title": "Bootstrap Dropdown on Hover",
   "description": "Adds hover functionality to bootstrap menus",
   "version": "0.1",
   "homepage": "git",

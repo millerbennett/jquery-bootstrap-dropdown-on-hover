@@ -1,11 +1,11 @@
 {
-  "name": "bootstrap-navigation-on-hover",
+  "name": "bootstrap-dropdown-on-hover",
   "version": "1.0.0-1",
-  "description": "Bootstrap Navigation on Hover",
+  "description": "Bootstrap Dropdown on Hover",
   "keywords": [
     "jquery-plugin"
   ],
-  "homepage": "https://github.com/millerbennett/bootstrap-navigation-on-hover",
+  "homepage": "https://github.com/millerbennett/bootstrap-dropdown-on-hover",
   "author": {
     "name": "Ben Miller",
     "email": "miller.bennett@gmail.com",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/millerbennett/bootstrap-navigation-on-hover.git"
+    "url": "https://github.com/millerbennett/bootstrap-dropdown-on-hover.git"
   },
   "licenses": [
     {

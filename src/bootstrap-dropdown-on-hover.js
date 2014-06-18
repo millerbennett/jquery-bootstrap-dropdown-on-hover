@@ -1,5 +1,5 @@
 /*
- * bootstrap navigation on hover
+ * bootstrap dropdown on hover
  * 
  *
  * Copyright (c) 2014 Ben Miller
@@ -11,7 +11,7 @@
 (function($) {
 
     // here we go!
-    $.bootstrapNavigationOnHover = function(element, options) {
+    $.bootstrapDropdownOnHover = function(element, options) {
 
         // plugin's default options
         // this is private property and is accessible only from inside the plugin
@@ -161,7 +161,7 @@
             $container.find(".dropdown-menu").unbind(".bnoh");
 
             // remove plugin data
-            $container.removeData("bootstrapNavigationOnHover");
+            $container.removeData("bootstrapDropdownOnHover");
         };
 
         // private methods
@@ -182,24 +182,24 @@
     };
 
     // add the plugin to the jQuery.fn object
-    $.fn.bootstrapNavigationOnHover = function(options) {
+    $.fn.bootstrapDropdownOnHover = function(options) {
 
         // iterate through the DOM elements we are attaching the plugin to
         return this.each(function() {
 
             // if plugin has not already been attached to the element
-            if (undefined === $(this).data('bootstrapNavigationOnHover')) {
+            if (undefined === $(this).data('bootstrapDropdownOnHover')) {
 
                 // create a new instance of the plugin
                 // pass the DOM element and the user-provided options as arguments
-                var plugin = new $.bootstrapNavigationOnHover(this, options);
+                var plugin = new $.bootstrapDropdownOnHover(this, options);
 
                 // in the jQuery version of the element
                 // store a reference to the plugin object
                 // you can later access the plugin and its methods and properties like
                 // element.data('pluginName').publicMethod(arg1, arg2, ... argn) or
                 // element.data('pluginName').settings.propertyName
-                $(this).data('bootstrapNavigationOnHover', plugin);
+                $(this).data('bootstrapDropdownOnHover', plugin);
 
             }
 
