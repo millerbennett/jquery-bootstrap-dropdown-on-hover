@@ -51,5 +51,5 @@ Public demo coming soon.
 | Property            | Description                                                              | Default value  |
 |:------------------- |:------------------------------------------------------------------------ |:-------------- |
 | mouseOutDelay       | Number of milliseconds to wait before closing the menu on mouseleave     | 500            |
-| responsiveThreshold | Pixel width where the menu's should no-longer be activated by hover      | 992            |
-| hideBackdrop        | Whether to remove the backdrop element upon hover (mobile only)          | true           |
+| responsiveThreshold | Pixel width where the menus should no-longer be activated by hover       | 992            |
+| hideBackdrop        | Whether to remove the menu backdrop upon hover (mobile only)             | true           |
