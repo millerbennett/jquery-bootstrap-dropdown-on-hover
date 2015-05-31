@@ -11,7 +11,11 @@ Adds hover functionality to bootstrap dropdowns, nice things:
 
 ## Getting Started
 
-Download the [minified version][min] or the [commented version][max].
+```shell
+bower install bootstrap-dropdown-on-hover
+```
+
+Or download the [minified version][min] or the [commented version][max].
 
 [min]: https://raw.githubusercontent.com/millerbennett/jquery-bootstrap-dropdown-on-hover/master/dist/jquery.bootstrap-dropdown-on-hover.min.js
 [max]: https://raw.githubusercontent.com/millerbennett/jquery-bootstrap-dropdown-on-hover/master/dist/jquery.bootstrap-dropdown-on-hover.js
