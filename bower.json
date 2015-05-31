@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-dropdown-on-hover",
-  "version": "0.1",
+  "version": "1.0",
   "dependencies": {
     "jquery": "~1.11.1",
     "bootstrap": "~3.3.4"
