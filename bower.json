@@ -1,9 +1,29 @@
 {
   "name": "bootstrap-dropdown-on-hover",
   "version": "0.1",
-  "dependencies": {},
   "devDependencies": {
     "qunit": "~1.12.0",
     "jquery": "~1.11.1"
-  }
+  },
+  "homepage": "https://github.com/millerbennett/jquery-bootstrap-dropdown-on-hover",
+  "authors": [
+    "Ben Miller <bmiller@longviewinc.com>"
+  ],
+  "description": "Enables bootstrap menus to be activated on hover.",
+  "main": "dist/jquery.bootstrap-dropdown-on-hover.min.js",
+  "keywords": [
+    "bootstrap",
+    "jquery",
+    "dropdown",
+    "hover"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "demo"
+  ]
 }
