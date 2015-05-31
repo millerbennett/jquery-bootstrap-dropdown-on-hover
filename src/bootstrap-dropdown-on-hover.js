@@ -58,7 +58,7 @@
                 $trigger.on("mouseenter.bnoh", function() {
 
                     // responsive check, disable this function if it is in the responsive threshold
-                    if (responsive()) {
+                    if (isWithinResponsiveThreshold()) {
                         return;
                     }
 
@@ -70,8 +70,17 @@
                     // we check first to make sure not to double toggle the menu
                     if (!$parent.hasClass("open")) {
 
+                        // get the animation (if it exists)
+                        var animation = $menu.attr('data-animation');
+
                         // trigger bootstrap's dropdown
                         $trigger.dropdown('toggle');
+
+                        // trigger animation
+                        if (animation) {
+                            $menu.addClass(animation);
+                            $menu.on('animationend', function() { $menu.removeClass(animation); });
+                        }
 
                         /* Bootstrap puts a backdrop on touch-enabled (mostly mobile) devices, but it could also appear
                         on devices such as the Surface or other large touch-screen devices that might also be used with
@@ -89,7 +98,7 @@
                 $trigger.on("mouseleave.bnoh", function() {
 
                     // responsive check, disable this function if it is in the responsive threshold
-                    if (responsive()) {
+                    if (isWithinResponsiveThreshold()) {
                         return;
                     }
 
@@ -104,6 +113,13 @@
 
                             // blur the trigger element to remove the focus or active styling
                             $trigger.blur();
+
+                            // remove animation classes if ended prematurely
+                            var animation = $menu.attr('data-animation');
+
+                            if (animation) {
+                                $menu.removeClass(animation);
+                            }
                         }
                     }, plugin.settings.mouseOutDelay); // setting for mouse-out duration
                 });
@@ -111,7 +127,7 @@
                 $menu.on("mouseenter.bnoh", function() {
 
                     // responsive check, disable this function if it is in the responsive threshold
-                    if (responsive()) {
+                    if (isWithinResponsiveThreshold()) {
                         return;
                     }
 
@@ -123,7 +139,7 @@
                 $menu.on("mouseleave.bnoh", function() {
 
                     // responsive check, disable this function if it is in the responsive threshold
-                    if (responsive()) {
+                    if (isWithinResponsiveThreshold()) {
                         return;
                     }
 
@@ -167,7 +183,7 @@
         // these methods can be called only from inside the plugin like:
         // methodName(arg1, arg2, ... argn)
 
-        var responsive = function() {
+        var isWithinResponsiveThreshold = function() {
 
             // returns true if the plugin is set to be responsive and the width of the window is less than
             // the plugin responsive threashhold setting
